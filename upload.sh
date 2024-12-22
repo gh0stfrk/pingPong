@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set your bucket name
+BUCKET_NAME="ghost-functions"
+REGION="us-east-1"
 
 if [[ -z "$1" ]]; then
   echo "Please provide an environment: dev, test, or uat"
@@ -11,11 +14,11 @@ if [[ ! "$1" =~ ^(dev|test|uat)$ ]]; then
   exit 1
 fi
 
-if [[ -z "$AWS_ACCESS_KEY_ID" || -z "$AWS_SECRET_ACCESS_KEY" || -z "$AWS_REGION" ]]; then
-  echo "Missing required environment variables."
-  echo "Please set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_REGION."
-  exit 1
-fi
+# if [[ -z "$AWS_ACCESS_KEY_ID" || -z "$AWS_SECRET_ACCESS_KEY" || -z "$AWS_REGION" ]]; then
+#   echo "Missing required environment variables."
+#   echo "Please set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_REGION."
+#   exit 1
+# fi
 
 
 export ENV="$1"
@@ -32,10 +35,11 @@ if [ $? -eq 0 ]; then
   echo "Files successfully zipped into $ZIP_FILE"
 
   aws lambda update-function-code \
+      --region $REGION \
       --function-name pingPong \
       --zip-file fileb://$ZIP_FILE 2>&1 | tee /dev/stderr
 
-  aws s3 cp $ZIP_FILE s3://your-bucket-name/$ENV/$ZIP_FILE 2>&1 | tee /dev/stderr
+  aws s3 cp $ZIP_FILE s3://$BUCKET_NAME/$ENV/$ZIP_FILE/ 2>&1 | tee /dev/stderr
 
   echo "Files uploaded to Lambda and S3 bucket"
 else
