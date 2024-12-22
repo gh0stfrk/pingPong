@@ -1,0 +1,15 @@
+{
+  "name": "pingpong",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Salman S",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@aws-sdk/client-ssm": "^3.716.0",
+    "mongo": "^0.1.0"
+  }
+}
