@@ -23,11 +23,11 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          mkdir build
-          cp -r * ./build
-          npm ci --prefix ./build
-          cd build
-          zip -r ../deployment-package.zip .
+          mkdir /build
+          cp -r * /build
+          npm ci --prefix /build
+          cd /build
+          zip -r deployment-package.zip .
 
       - name: Configure AWS Credentials
         run: |
