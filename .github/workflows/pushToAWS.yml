@@ -24,8 +24,8 @@ jobs:
       - name: Install Dependencies
         run: |
           mkdir build
-          npm ci --prefix ./build
           cp -r * ./build
+          npm ci --prefix ./build
           cd build
           zip -r ../deployment-package.zip .
 
